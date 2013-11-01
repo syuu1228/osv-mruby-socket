@@ -83,7 +83,7 @@ mrb_addrinfo_getaddrinfo(mrb_state *mrb, mrb_value klass)
 
   error = getaddrinfo(hostname, servname, &hints, &res0);
   if (error) {
-    mrb_raisef(mrb, E_SOCKET_ERROR, "getaddrinfo: %S", mrb_str_new_cstr(mrb, gai_strerror(error)));
+    mrb_raisef(mrb, E_SOCKET_ERROR, "getaddrinfo");
   }
   mrb_cv_set(mrb, klass, mrb_intern_cstr(mrb, "_lastai"), mrb_voidp_value(mrb, res0));
 
@@ -118,7 +118,7 @@ mrb_addrinfo_getnameinfo(mrb_state *mrb, mrb_value self)
   }
   error = getnameinfo((struct sockaddr *)RSTRING_PTR(sastr), (socklen_t)RSTRING_LEN(sastr), RSTRING_PTR(host), NI_MAXHOST, RSTRING_PTR(serv), NI_MAXSERV, flags);
   if (error != 0) {
-    mrb_raisef(mrb, E_SOCKET_ERROR, "getnameinfo: %s", gai_strerror(error));
+    mrb_raisef(mrb, E_SOCKET_ERROR, "getnameinfo");
   }
   ary = mrb_ary_new_capa(mrb, 2);
   mrb_str_resize(mrb, host, strlen(RSTRING_PTR(host)));
